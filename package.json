@@ -1,0 +1,25 @@
+{
+  "name": "scan-tai-lieu",
+  "version": "1.1.0",
+  "private": true,
+  "description": "Scan Tài Liệu — app Android (Capacitor): chụp giấy tờ, tự cắt trang, khử bóng, xuất PDF",
+  "scripts": {
+    "libs": "node scripts/copy-libs.js"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.5.0",
+    "@capacitor/cli": "^8.5.0",
+    "@capacitor/core": "^8.5.0",
+    "@capacitor/filesystem": "^8.1.0",
+    "@capacitor/share": "^8.0.0",
+    "jspdf": "2.5.1",
+    "jszip": "3.10.1",
+    "pdfjs-dist": "3.11.174"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

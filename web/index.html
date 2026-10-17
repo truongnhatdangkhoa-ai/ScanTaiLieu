@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' blob: data:; script-src 'self' 'unsafe-inline' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' blob: data:; worker-src 'self' blob:; media-src 'self' blob: data:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#F3F5F9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0E131B" media="(prefers-color-scheme: dark)">
+<title>Scan Tài Liệu</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="css/app-mobile.css"><!-- bảng màu + khung giao diện điện thoại (Sáng/Tối theo hệ thống) -->
+<link rel="stylesheet" href="css/scan-tai-lieu.css"><!-- CSS riêng của công cụ Scan -->
+</head>
+<body>
+<!-- Scan Tài Liệu: chụp / chọn ảnh hoặc PDF → tự tìm và cắt trang giấy, khử bóng, làm trắng nền → xuất PDF / JPG / ZIP.
+     Mọi xử lý chạy ngay trên máy, không gửi dữ liệu đi đâu. Tài liệu đã lưu nằm trong bộ nhớ app (IndexedDB 'kl_scan_luu'). -->
+<header class="appbar">
+  <div class="brand">
+    <svg class="logo" aria-hidden="true" focusable="false" viewBox="0 0 1024 1024"><defs>
+  <linearGradient id="hbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2F80FF"/><stop offset="1" stop-color="#0A3596"/></linearGradient>
+  <linearGradient id="hbeam" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#19E0C2" stop-opacity="0.15"/><stop offset=".18" stop-color="#19E0C2"/><stop offset=".82" stop-color="#19E0C2"/><stop offset="1" stop-color="#19E0C2" stop-opacity="0.15"/></linearGradient>
+  <filter id="hglow" x="-10%" y="-200%" width="120%" height="500%"><feGaussianBlur stdDeviation="14"/></filter>
+</defs><rect width="1024" height="1024" rx="224" fill="url(#hbg)"/>
+  <!-- tờ giấy có góc gấp -->
+  <path d="M348 214H612L732 334V754a56 56 0 0 1-56 56H348a56 56 0 0 1-56-56V270a56 56 0 0 1 56-56Z" fill="#FFFFFF"/>
+  <path d="M612 214V290a44 44 0 0 0 44 44H732Z" fill="#BFD6FF"/>
+  <!-- dòng chữ -->
+  <rect x="352" y="392" width="200" height="30" rx="15" fill="#9DB9EA"/>
+  <rect x="352" y="462" width="320" height="30" rx="15" fill="#B9CEF1"/>
+  <rect x="352" y="532" width="320" height="30" rx="15" fill="#B9CEF1"/>
+  <rect x="352" y="602" width="260" height="30" rx="15" fill="#B9CEF1"/>
+  <rect x="352" y="672" width="300" height="30" rx="15" fill="#B9CEF1"/>
+  <!-- khung quét 4 góc -->
+  <g fill="none" stroke="#19E0C2" stroke-width="38" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M222 322V252a62 62 0 0 1 62-62H354"/>
+    <path d="M670 190H740a62 62 0 0 1 62 62V322"/>
+    <path d="M802 702V772a62 62 0 0 1-62 62H670"/>
+    <path d="M354 834H284a62 62 0 0 1-62-62V702"/>
+  </g>
+  <!-- tia quét -->
+  <rect x="196" y="500" width="632" height="34" rx="17" fill="url(#hbeam)" filter="url(#hglow)"/>
+  <rect x="196" y="504" width="632" height="26" rx="13" fill="url(#hbeam)"/>
+</svg>
+    <span data-notr>Scan Tài Liệu</span>
+  </div>
+  <button type="button" class="st-open" id="stOpen" title="Cài đặt" aria-label="Cài đặt">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.7 3.9 5.7 3.9 9s-1.3 6.3-3.9 9c-2.6-2.7-3.9-5.7-3.9-9S9.4 5.7 12 3Z"/></svg>
+    <b id="stCode" data-notr>VI</b>
+  </button>
+</header>
+<main class="scan-page"><div id="scanRoot"></div></main>
+<div class="scan-toast" id="scanToast" role="status" hidden></div>
+<div class="st-sheet" id="stSheet" hidden role="dialog" aria-modal="true" aria-labelledby="stTitle">
+  <div class="st-card">
+    <div class="st-head"><b id="stTitle">Cài đặt</b><button type="button" class="st-x" data-st="close" aria-label="Đóng">×</button></div>
+    <div class="st-lb">Ngôn ngữ</div>
+    <div class="st-seg" id="stLang" data-notr><button type="button" data-v="vi" aria-pressed="false">Tiếng Việt</button><button type="button" data-v="en" aria-pressed="false">English</button></div>
+    <p class="st-note">Mọi ảnh và tài liệu được xử lý ngay trên máy, không gửi đi đâu.</p>
+  </div>
+</div>
+<script src="js/i18n.js"></script>
+<script src="js/scan-tai-lieu.js"></script>
+<script src="js/settings.js"></script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024"><defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2F80FF"/><stop offset="1" stop-color="#0A3596"/></linearGradient>
+  <linearGradient id="beam" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#19E0C2" stop-opacity="0.15"/><stop offset=".18" stop-color="#19E0C2"/><stop offset=".82" stop-color="#19E0C2"/><stop offset="1" stop-color="#19E0C2" stop-opacity="0.15"/></linearGradient>
+  <filter id="glow" x="-10%" y="-200%" width="120%" height="500%"><feGaussianBlur stdDeviation="14"/></filter>
+</defs><rect width="1024" height="1024" rx="224" fill="url(#bg)"/>
+  <!-- tờ giấy có góc gấp -->
+  <path d="M348 214H612L732 334V754a56 56 0 0 1-56 56H348a56 56 0 0 1-56-56V270a56 56 0 0 1 56-56Z" fill="#FFFFFF"/>
+  <path d="M612 214V290a44 44 0 0 0 44 44H732Z" fill="#BFD6FF"/>
+  <!-- dòng chữ -->
+  <rect x="352" y="392" width="200" height="30" rx="15" fill="#9DB9EA"/>
+  <rect x="352" y="462" width="320" height="30" rx="15" fill="#B9CEF1"/>
+  <rect x="352" y="532" width="320" height="30" rx="15" fill="#B9CEF1"/>
+  <rect x="352" y="602" width="260" height="30" rx="15" fill="#B9CEF1"/>
+  <rect x="352" y="672" width="300" height="30" rx="15" fill="#B9CEF1"/>
+  <!-- khung quét 4 góc -->
+  <g fill="none" stroke="#19E0C2" stroke-width="38" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M222 322V252a62 62 0 0 1 62-62H354"/>
+    <path d="M670 190H740a62 62 0 0 1 62 62V322"/>
+    <path d="M802 702V772a62 62 0 0 1-62 62H670"/>
+    <path d="M354 834H284a62 62 0 0 1-62-62V702"/>
+  </g>
+  <!-- tia quét -->
+  <rect x="196" y="500" width="632" height="34" rx="17" fill="url(#beam)" filter="url(#glow)"/>
+  <rect x="196" y="504" width="632" height="26" rx="13" fill="url(#beam)"/>
+</svg>

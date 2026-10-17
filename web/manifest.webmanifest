@@ -1,0 +1,1 @@
+{"name":"Scan Tài Liệu","short_name":"Scan Tài Liệu","start_url":"./","display":"standalone","orientation":"portrait","background_color":"#F3F5F9","theme_color":"#F3F5F9","lang":"vi","icons":[{"src":"icons/icon-192.png","sizes":"192x192","type":"image/png"},{"src":"icons/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}]}
