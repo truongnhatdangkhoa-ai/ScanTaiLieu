@@ -72,7 +72,7 @@ body{ display:flex; flex-direction:column; min-height:100dvh; height:100dvh; ove
 .st-sheet{ position:fixed; inset:0; z-index:60; background:rgba(0,0,0,0); display:flex; align-items:flex-end; justify-content:center; transition:background .25s; }
 .st-sheet.open{ background:rgba(0,0,0,.45); }
 .st-card{ width:100%; max-width:520px; background:var(--kl-surface); color:var(--kl-text); border-radius:20px 20px 0 0; box-shadow:var(--kl-sh3);
-  padding:16px 18px calc(18px + var(--sab)); transform:translateY(100%); transition:transform .26s ease; }
+  padding:16px 18px calc(18px + var(--sab)); transform:translateY(100%); transition:transform .26s ease; touch-action:pan-y; max-height:90dvh; overflow-y:auto; overscroll-behavior:contain; }
 .st-sheet.open .st-card{ transform:none; }
 .st-head{ display:flex; align-items:center; justify-content:space-between; font-size:18px; margin-bottom:6px; }
 .st-x{ width:44px; height:44px; border:0; background:none; color:var(--kl-text-2); font-size:28px; line-height:1; cursor:pointer; }
