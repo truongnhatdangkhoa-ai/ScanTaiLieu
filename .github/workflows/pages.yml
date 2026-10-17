@@ -1,0 +1,32 @@
+name: Đăng trang chính sách quyền riêng tư (GitHub Pages)
+# Google Play yêu cầu một đường link công khai tới chính sách quyền riêng tư: https://<tên-github>.github.io/<tên-repo>/privacy.html
+# App KHÔNG đọc nội dung từ trang này (web nằm sẵn trong app), nên sửa web/ không làm app tự đổi — cần build lại bản mới.
+on:
+  push:
+    branches: [main]
+    paths: ['web/privacy.html']
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.dep.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Chỉ đăng trang chính sách
+        run: |
+          mkdir -p site/icons
+          cp web/privacy.html site/privacy.html
+          cp web/icons/icon-192.png site/icons/icon-192.png
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: site }
+      - id: dep
+        uses: actions/deploy-pages@v4
